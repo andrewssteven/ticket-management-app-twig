@@ -1,0 +1,53 @@
+{% extends 'base.twig' %}
+
+{% block title %}Dashboard - Ticket Management{% endblock %}
+
+{% block content %}
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+  <h1 class="text-2xl font-semibold mb-4">Dashboard</h1>
+  <p class="text-gray-500">This is a demo dashboard. Use the tickets page to view and manage tickets.</p>
+  <div class="mt-4">
+    <a href="/tickets" class="px-4 py-2 bg-indigo-600 text-white rounded">View Tickets</a>
+  </div>
+</div>
+<!-- dashboard summary widget -->
+<div id="dashboard-summary" class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6"></div>
+
+<script type="module">
+  import { fetchTickets } from '/assets/js/tickets.js';
+
+  function makeCard(title, value, extra = '') {
+    return `
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+        <div class="text-sm text-gray-500 dark:text-gray-400">${title}</div>
+        <div class="text-2xl font-semibold mt-2">${value}</div>
+        ${extra ? `<div class="text-xs text-gray-500 mt-1">${extra}</div>` : ''}
+      </div>
+    `;
+  }
+
+  async function renderSummary() {
+    const root = document.getElementById('dashboard-summary');
+    if (!root) return;
+    root.innerHTML = '<div class="col-span-4 p-4 bg-white dark:bg-gray-800 rounded shadow">Loading summary...</div>';
+    try {
+      const tickets = await fetchTickets();
+      const total = tickets.length;
+      const open = tickets.filter(t => t.status === 'open').length;
+      const inProgress = tickets.filter(t => t.status === 'in_progress').length;
+      const closed = tickets.filter(t => t.status === 'closed').length;
+
+      root.innerHTML = '';
+      root.insertAdjacentHTML('beforeend', makeCard('Total tickets', total));
+      root.insertAdjacentHTML('beforeend', makeCard('Open', open));
+      root.insertAdjacentHTML('beforeend', makeCard('In progress', inProgress));
+      root.insertAdjacentHTML('beforeend', makeCard('Closed', closed));
+    } catch (err) {
+      root.innerHTML = '<div class="col-span-4 p-4 bg-red-50 dark:bg-red-900 text-red-900 dark:text-red-100 rounded">Failed to load summary</div>';
+      console.error('Failed to load dashboard summary', err);
+    }
+  }
+
+  renderSummary();
+</script>
+{% endblock %}

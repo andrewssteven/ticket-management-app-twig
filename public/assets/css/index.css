@@ -1,0 +1,18 @@
+@import "https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css";
+
+:focus {
+  outline: none;
+}
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  background-color: #f8fafc;
+}

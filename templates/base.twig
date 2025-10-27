@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{% block title %}Ticket Management{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/index.css">
+  </head>
+  <body class="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    {% include 'partials/header.twig' %}
+    <main class="flex-1 w-full mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 py-8">
+      {% block content %}{% endblock %}
+    </main>
+    {% include 'partials/footer.twig' %}
+    {# toast root for notifications (populated by public/assets/js/toast.js) #}
+    <div id="toast-root"></div>
+    {# Load app as a module (tickets.js is imported by app.js) #}
+    <script type="module" src="/assets/js/app.js"></script>
+  </body>
+</html>

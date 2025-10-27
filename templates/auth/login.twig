@@ -1,0 +1,18 @@
+{% extends 'base.twig' %}
+
+{% block title %}Login - Ticket Management{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+  <h3 class="text-lg font-semibold mb-4">Login</h3>
+  <form data-auth="login">
+    <label class="block text-sm">Email</label>
+    <input name="email" class="mt-1 w-full px-3 py-2 rounded border" />
+    <label class="block text-sm mt-3">Password</label>
+    <input name="password" type="password" class="mt-1 w-full px-3 py-2 rounded border" />
+    <div class="mt-4">
+      <button class="px-4 py-2 bg-indigo-600 text-white rounded">Login</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
